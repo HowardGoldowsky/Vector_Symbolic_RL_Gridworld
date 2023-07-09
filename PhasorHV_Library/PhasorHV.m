@@ -15,18 +15,52 @@ classdef PhasorHV < Hypervector
       
     methods
         
-        function obj = PhasorHV(D,varargin) % Constructor
-            % If varargin is empty, constructor builds a hypervector with
-            % fresh samples, else it builds a hypervector from the samples
-            % passed in to it.          
-            obj.dimension = D;
-            phi = 2 * pi * rand(D,1) - pi; % [-pi, pi)
+%         function obj = PhasorHV(D,varargin) % Constructor
+%             % If varargin is empty, constructor builds a hypervector with
+%             % fresh samples, else it builds a hypervector from the samples
+%             % passed in to it.          
+%             obj.dimension = D;
+%             phi = 2 * pi * rand(D,1) - pi; % [-pi, pi)
+%             
+%             if (isempty(varargin))
+%                 obj.samples = exp(1i * phi);
+%             else
+%                 obj.samples = cell2mat(varargin(1));
+%             end
+%         end
+        
+        function obj = PhasorHV(op) % Constructor   
             
-            if (isempty(varargin))
-                obj.samples = exp(1i * phi);
-            else
-                obj.samples = cell2mat(varargin(1));
+            arguments
+                op.D                    (1,1) double = 1000
+                op.samples          (:,1) = []  
+                op.meanBias         (1,1) double = 0;
+                op.variance           (1,1) double = pi/2
+                op.distribution     (1,1) string = 'uniform'
             end
+            
+            switch (op.distribution)
+                case 'uniform'
+                    obj.dimension = op.D;
+                    phi = 2 * pi * rand(op.D,1) - pi; % [-pi, pi)
+
+                    if (isempty(op.samples))
+                        obj.samples = exp(1i * phi);
+                    else
+                        obj.samples = op.samples;
+                    end
+                    
+                case 'normal'
+                    obj.dimension = op.D;
+                    phi = op.variance * randn(op.D,1) + op.meanBias; % [-pi, pi)
+
+                    if (isempty(op.samples))
+                        obj.samples = exp(1i * phi);
+                    else
+                        obj.samples = op.samples;
+                    end
+            
+            end % switch
         end
         
         function obj = normalize(obj)
@@ -41,7 +75,7 @@ classdef PhasorHV < Hypervector
             % we do an elementwise multiplication.
             boundSamples = v1.samples .* v2.samples;
             D = v1.dimension;
-            result = PhasorHV(D,boundSamples);
+            result = PhasorHV('D', D, 'samples', boundSamples);
         end
         
         function result = unbind(v1,v2)
@@ -54,7 +88,7 @@ classdef PhasorHV < Hypervector
             % original bound hypervector, it should be close to 1.
             boundSamples = v1.samples .* conj(v2.samples);
             D = v1.dimension;
-            result = PhasorHV(D,boundSamples);
+            result = PhasorHV('D', D, 'samples', boundSamples);
         end
         
         function result = similarity(v1,v2)
@@ -92,7 +126,7 @@ classdef PhasorHV < Hypervector
             D = obj.dimension;
             phi = pi * ones(D,1);
             invSamples = obj.samples .* exp(1i*phi);      % Add pi to every angle.      
-            result = PhasorHV(D,invSamples);                
+            result = PhasorHV('D', D, 'samples', invSamples);                
         end
         
         function result = encode(obj,state)
@@ -103,7 +137,7 @@ classdef PhasorHV < Hypervector
             %   state: value of the feature
             D = obj.dimension;
             encodedSamples = obj.samples.^state;     % raise every sample to the same power
-            result = PhasorHV(D,encodedSamples);
+            result = PhasorHV('D', D, 'samples', encodedSamples);
         end
             
     end % methods

@@ -15,7 +15,7 @@ classdef Reward
         function obj = Reward(type, value, D)           
             obj.type  = type;
             obj.value = value;     
-            obj.HV = PhasorHV(D);
+            obj.HV = PhasorHV('D', D);
         end
     
     end

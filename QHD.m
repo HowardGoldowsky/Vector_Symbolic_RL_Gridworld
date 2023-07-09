@@ -45,16 +45,16 @@ classdef QHD
         
         function obj = initModel(obj,D)           
             % Initialize the required hypervectors     
-            obj.H = PhasorHV(D);                    % init random state vector as zero state
+            obj.H = PhasorHV('D', D);                    % init random state vector as zero state
             obj.basisState = obj.H;
 
-            obj.P1 = PhasorHV(D);                    
-            obj.P2 = PhasorHV(D);
-            obj.P3 = PhasorHV(D);
-            obj.P4 = PhasorHV(D);
+            obj.P1 = PhasorHV('D', D);                 
+            obj.P2 = PhasorHV('D', D);
+            obj.P3 = PhasorHV('D', D);
+            obj.P4 = PhasorHV('D', D);
             
-            obj.foodStateHV = PhasorHV(D);
-            obj.enemyStateHV = PhasorHV(D);
+            obj.foodStateHV = PhasorHV('D', D);
+            obj.enemyStateHV = PhasorHV('D', D);
         end
         
         function obj = encodeState(obj, agent, maxVal, minVal)

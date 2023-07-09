@@ -31,14 +31,14 @@ classdef Agent
             obj.rewardHistory = zeros(numEpisodes,1);
             obj.stepHistory = zeros(numEpisodes,1);
             obj.stepDirectionHistory = cell(numEpisodes,10);
-            M1 = PhasorHV(D,zeros(D,1));    % model hypervectors, one for each action; init to zeros
-            M2 = PhasorHV(D,zeros(D,1));
-            M3 = PhasorHV(D,zeros(D,1));    
-            M4 = PhasorHV(D,zeros(D,1));          
-            Mt1 = PhasorHV(D,zeros(D,1));    % model hypervectors, one for each action; init to zeros
-            Mt2 = PhasorHV(D,zeros(D,1));
-            Mt3 = PhasorHV(D,zeros(D,1));    
-            Mt4 = PhasorHV(D,zeros(D,1));          
+            M1 = PhasorHV('D', D, 'samples', zeros(D,1));    % model hypervectors, one for each action; init to zeros
+            M2 = PhasorHV('D', D, 'samples', zeros(D,1));
+            M3 = PhasorHV('D', D, 'samples', zeros(D,1));
+            M4 = PhasorHV('D', D, 'samples', zeros(D,1));        
+            Mt1 = PhasorHV('D', D, 'samples', zeros(D,1));    % model hypervectors, one for each action; init to zeros
+            Mt2 = PhasorHV('D', D, 'samples', zeros(D,1));
+            Mt3 = PhasorHV('D', D, 'samples', zeros(D,1));
+            Mt4 = PhasorHV('D', D, 'samples', zeros(D,1)); 
             
             obj.model = [M1,M2,M3,M4];    % make easy to index
             obj.model_target = [Mt1,Mt2,Mt3,Mt4];   
