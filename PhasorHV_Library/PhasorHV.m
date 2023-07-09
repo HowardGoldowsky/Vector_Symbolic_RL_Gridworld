@@ -7,28 +7,13 @@ classdef PhasorHV < Hypervector
         samples
     end % required properties
     
-    
     % Specific to PhasorHV class
     properties
         
     end
       
     methods
-        
-%         function obj = PhasorHV(D,varargin) % Constructor
-%             % If varargin is empty, constructor builds a hypervector with
-%             % fresh samples, else it builds a hypervector from the samples
-%             % passed in to it.          
-%             obj.dimension = D;
-%             phi = 2 * pi * rand(D,1) - pi; % [-pi, pi)
-%             
-%             if (isempty(varargin))
-%                 obj.samples = exp(1i * phi);
-%             else
-%                 obj.samples = cell2mat(varargin(1));
-%             end
-%         end
-        
+               
         function obj = PhasorHV(op) % Constructor   
             
             arguments
