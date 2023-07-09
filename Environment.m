@@ -42,23 +42,7 @@ classdef Environment
                         flag = true;
                     end
                 end % for i
-            end % while
-            
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% DEBUG CODE TO USE CONSTANT LOCATIONS %%%%%%%%%
- 
-%             caseIDX = randi(2,1);
-%             caseList = [9 17];
-%             configCase = caseList(caseIDX);
-%                 switch player.type  
-%                     case 'player'
-%                         x = obj.configs(configCase).player(2); y = obj.configs(configCase).player(1);
-%                     case 'food'
-%                         x = obj.configs(configCase).food(2); y = obj.configs(configCase).food(1);
-%                     case 'enemy'  
-%                         x = obj.configs(configCase).enemy(2); y = obj.configs(configCase).enemy(1);
-%                 end
-                
+            end % while            
    
             obj.numPlayers = obj.numPlayers + 1;
             obj.occupiedCells(obj.numPlayers,:) = [y,x]; 
